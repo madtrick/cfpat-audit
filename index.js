@@ -16,6 +16,8 @@ async function run () {
 
   const users = await listOrgUsers(github, 'contentful');
   const userLogins = users.map((user) => user.login);
+  // Include the org id in the set of users to check
+  userLogins.push('contentful');
   const allLeaks = await findCFPATS(github);
 
   const orgLeaks = allLeaks.filter((leak) => {
