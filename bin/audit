@@ -3,14 +3,10 @@
 const Bluebird = require('bluebird');
 
 const findOrganizationCPATS = require('../lib/find-organization-cpats');
-const storeAuditLog = require('../lib/aws/store-audit-log');
 
 Bluebird.coroutine(function * () {
   const organizationId = process.env.GITHUB_ORGANIZATION_ID;
   const tokens = yield findOrganizationCPATS(organizationId);
-  const json = JSON.stringify(tokens);
-
-  yield storeAuditLog(json);
 
   var util = require('util');
   console.log(util.inspect(tokens, {showHidden: false, depth: null}));
