@@ -1,4 +1,4 @@
-service: cfpat-audit-v6
+service: cfpat-audit-v7
 
 provider:
   name: aws
@@ -19,6 +19,8 @@ package:
 functions:
   audit:
     handler: handler.run
+    events:
+      - schedule: rate(1 day)
     environment:
       GITHUB_ACCESS_TOKEN: ${env:GITHUB_ACCESS_TOKEN}
       AUDIT_BUCKET: ${env:AUDIT_BUCKET}
