@@ -23,4 +23,5 @@ functions:
       - schedule: rate(1 day)
     environment:
       GITHUB_ACCESS_TOKEN: ${env:GITHUB_ACCESS_TOKEN}
+      GITHUB_ORGANIZATION_ID: ${env:GITHUB_ORGANIZATION_ID}
       AUDIT_BUCKET: ${env:AUDIT_BUCKET}
