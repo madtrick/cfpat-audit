@@ -1,10 +1,16 @@
-service: cfpat-audit-v5
+service: cfpat-audit-v6
 
 provider:
   name: aws
   runtime: nodejs6.10
   timeout: 300
   region: us-east-1
+  iamRoleStatements:
+    - Effect: Allow
+      Action:
+        - s3:PutObject
+      Resource:
+        - arn:aws:s3:::${env:AUDIT_BUCKET}/*
 
 package:
  include:
@@ -15,3 +21,4 @@ functions:
     handler: handler.run
     environment:
       GITHUB_ACCESS_TOKEN: ${env:GITHUB_ACCESS_TOKEN}
+      AUDIT_BUCKET: ${env:AUDIT_BUCKET}
