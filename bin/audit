@@ -1,11 +1,21 @@
 #!/usr/bin/env node
 
 const Bluebird = require('bluebird');
+const AWS = require('aws-sdk');
 
 const findCFPATS = require('../lib/find-organization-cpats');
+const AUDIT_BUCKET = 'cfpat-audit';
 
 Bluebird.coroutine(function * () {
   const tokens = yield findCFPATS();
+  const json = JSON.stringify(tokens);
+  const S3Client = new AWS.S3();
+
+  yield S3Client.putObject({
+    Bucket: AUDIT_BUCKET,
+    Key: `cfpat-audit-result-${+ new Date()}`,
+    Body: json
+  }).promise();
 
   var util = require('util');
   console.log(util.inspect(tokens, {showHidden: false, depth: null}));
