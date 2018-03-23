@@ -1,0 +1,12 @@
+#!/usr/bin/env node
+
+const Bluebird = require('bluebird');
+
+const findCFPATS = require('../lib/find-organization-cpats');
+
+Bluebird.coroutine(function * () {
+  const tokens = yield findCFPATS();
+
+  var util = require('util');
+  console.log(util.inspect(tokens, {showHidden: false, depth: null}));
+})();
